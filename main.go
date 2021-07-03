@@ -1,3 +1,8 @@
+// This is a small web application for Github home test.
+// Application is used to create a webhook endpoint which
+// responds to webhook calls while creating new repository.
+// Then it will set the branch protection the the new repository
+// and create an issue within the repository
 package main
 
 import (
@@ -10,19 +15,23 @@ import (
 	"os"
 )
 
+// struct for repository name
 type postRepo struct {
 	FullName string `json:"full_name"`
 }
 
+// JSON payload input POST msg
 type postMsg struct {
 	Action     string `json:"action"`
 	Repository postRepo
 }
 
+// fucnction to write error message to response writer
 func postError(w http.ResponseWriter, code int) {
 	http.Error(w, http.StatusText(code), code)
 }
 
+// function to create branch protection
 func createBranchProtection(url string, token string, client *http.Client) (*http.Response, error) {
 	body, err := ioutil.ReadFile("./payload_branch_protection.json")
 	if err != nil {
@@ -43,6 +52,7 @@ func createBranchProtection(url string, token string, client *http.Client) (*htt
 	return resp, nil
 }
 
+// function to create an issue to a repository
 func createIssue(url string, token string, client *http.Client) (*http.Response, error) {
 	body, err := ioutil.ReadFile("./payload_create_issue.json")
 	if err != nil {
@@ -63,6 +73,7 @@ func createIssue(url string, token string, client *http.Client) (*http.Response,
 	return resp, nil
 }
 
+// root handler function
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		w.WriteHeader(http.StatusNotFound)
@@ -74,6 +85,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// handle function for webhook endpoint
 func hookHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		if r.Body == nil {
@@ -135,6 +147,7 @@ func hookHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// main function
 func main() {
 	fmt.Println("Starting hometest api v1...")
 	if _, ok := os.LookupEnv("TOKEN"); !ok {

@@ -10,6 +10,7 @@ import (
 	"testing"
 )
 
+// unit test for postError function
 func Test_postError(t *testing.T) {
 	tests := []struct {
 		name string
@@ -32,6 +33,7 @@ func Test_postError(t *testing.T) {
 	}
 }
 
+// unit test for createBranchProtection function
 func Test_createBranchProtection(t *testing.T) {
 	type branchProtectionInput struct {
 		RequiredStatusChecks struct {
@@ -85,6 +87,7 @@ func Test_createBranchProtection(t *testing.T) {
 	}
 }
 
+// unit test for createIssue function
 func Test_createIssue(t *testing.T) {
 	type issueInput struct {
 		Title  string   `json:"title"`
@@ -130,6 +133,7 @@ func Test_createIssue(t *testing.T) {
 	}
 }
 
+// unit test for rootHandler
 func Test_rootHandler(t *testing.T) {
 	type testData struct {
 		name    string
@@ -153,6 +157,7 @@ func Test_rootHandler(t *testing.T) {
 	}
 }
 
+// unit test for hookHanlder function
 func Test_hookHandler(t *testing.T) {
 	type testData struct {
 		name    string
