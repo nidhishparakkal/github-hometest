@@ -17,7 +17,7 @@ func Test_postError(t *testing.T) {
 		code int
 		want string
 	}{
-		{name: "test-200-OK", code: http.StatusOK, want: "OK\n"},
+		{name: "test-200-OK", code: http.StatusOK, want: "OK"},
 		{name: "test-400-Bad-Request", code: http.StatusBadRequest, want: "Bad Request\n"},
 		{name: "test-500-Internal-Server-Error", code: http.StatusInternalServerError, want: "Internal Server Error\n"},
 	}
